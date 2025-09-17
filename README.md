@@ -62,13 +62,15 @@ Beyond classification, AMP-Identifier computes and exports dozens of physicochem
 
 ---
 
-## Known Issues & Notes
+## Known Issues & Notes [!!!] 🐛
+
+> *"Where there's code, there's bug (🪲)!"* 
 
 ### Potential Inconsistency in Charge (`charge`) Computation
 - **Description:** A potential inconsistency was identified in the computed charge (`charge`) values during feature extraction.
 - **Impact:** This affects one column in `physicochemical_features.csv` and may influence prediction performance to some extent.
 - **Status:** Under active investigation. We are cross-checking `modlamp` documentation and contacting maintainers.
-- **Recommendation:** Interpret the `charge` descriptor with caution until resolved. Overall model performance—particularly Random Forest—remains strong given the many other descriptors involved.
+- **Recommendation:** Interpret the `charge` descriptor with caution until resolved. Overall model performance, particularly Random Forest, remains strong given the many other descriptors involved.
 
 ---
 
