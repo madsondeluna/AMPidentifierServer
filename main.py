@@ -4,10 +4,29 @@ import argparse
 import os
 from amp_identifier.core import run_prediction_pipeline
 
+# --- ASCII Art Banner ---
+# Added to give the tool a visual identity in the terminal.
+# The 'r' before the triple quotes (r""") creates a "raw string",
+# which prevents backslashes from being interpreted as escape characters.
+BANNER = r"""
+████████████████████████████████████████████████████████████████████████████████
+█▌                                                                            ▐█
+█▌     _    __  __ ____            ___    _            _   _  __ _            ▐█
+█▌    / \  |  \/  |  _ \          |_ _|__| | ___ _ __ | |_(_)/ _(_) ___ _ __  ▐█
+█▌   / _ \ | |\/| | |_) |  _____   | |/ _` |/ _ \ '_ \| __| | |_| |/ _ \ '__| ▐█
+█▌  / ___ \| |  | |  __/  |_____|  | | (_| |  __/ | | | |_| |  _| |  __/ |    ▐█
+█▌ /_/   \_\_|  |_|_|             |___\__,_|\___|_| |_|\__|_|_| |_|\___|_|    ▐█
+█▌                                                                            ▐█
+████████████████████████████████████████████████████████████████████████████████
+"""
+
 def main():
     """
     Main function to parse command-line arguments and run the prediction pipeline.
     """
+    # Prints the banner as soon as the tool is executed
+    print(BANNER)
+
     parser = argparse.ArgumentParser(
         description="AMP Identifier: A tool for Antimicrobial Peptide prediction and analysis.",
         formatter_class=argparse.RawTextHelpFormatter
@@ -25,7 +44,6 @@ def main():
         type=str,
         help="Directory where the result files will be saved."
     )
-    # --- UPDATED: Argument to choose a specific internal model ---
     parser.add_argument(
         "-m", "--model",
         type=str,
@@ -33,10 +51,9 @@ def main():
         choices=['rf', 'svm', 'gb'],
         help="Type of internal model to use for prediction. (default: rf)."
     )
-    # --- NEW: Argument to trigger ensemble voting ---
     parser.add_argument(
         "--ensemble",
-        action='store_true',  # This makes it a flag, e.g., --ensemble
+        action='store_true',
         help="Use all internal models and predict by majority vote."
     )
     parser.add_argument(
@@ -63,3 +80,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
