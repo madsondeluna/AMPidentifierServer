@@ -262,7 +262,7 @@ AMP-Identifier/
 | Rafael L. da Silva, BSc        | Collaborator; preprocessing; pipeline testing; lit. review | UFPE        | Recife, BR       |
 | Ana M. Benko‑Iseppon, PhD | Supervision; study design; review, validation                  | UFPE        | Recife, BR       |
 | João Pacífico, PhD        | Co‑PhD Advisor; computational review; evaluation       | UPE         | Petrolina, BR       |
-| Carlos A. dos Santos-Silva, PhD      | Co‑PhD Advisor; pipeline testing, review    | CESMAC        | Recife, BR       |
+| Carlos A. dos Santos-Silva, PhD      | Co‑PhD Advisor; pipeline testing, review    | CESMAC        | Maceió, BR       |
 
 
 ---
