@@ -243,13 +243,13 @@ AMP-Identifier/
 
 ### Advisory Team
 
-- **Ana M. Benko‑Iseppon, PhD** — Principal Investigator, UFPE — PhD Advisor  
+- **Ana M. Benko‑Iseppon, PhD** — Principal Investigator, UFPE — Advisor  
   **Contributions:** scientific supervision, study design, biological validation.
 
-- **João Pacífico, PhD** — Principal Investigator, UPE — Co‑PhD Advisor  
+- **João Pacífico, PhD** — Principal Investigator, UPE — Co‑Advisor  
   **Contributions:** computational analysis review, dataset curation, evaluation protocol, reproducibility.
 
-- **Carlos A. dos Santos-Silva, PhD** — Professor, CESMAC — Co‑PhD Advisor  
+- **Carlos A. dos Santos-Silva, PhD** — Professor, CESMAC — Co‑Advisor  
   **Contributions:** structural biology expertise, evaluation protocol, benchmarking strategy, reproducibility.
 
 ---
