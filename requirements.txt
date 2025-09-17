@@ -1,0 +1,14 @@
+# Core libraries for data science and machine learning
+numpy
+pandas
+scikit-learn
+joblib
+
+# Library for bioinformatics
+biopython
+
+# AMP-specific feature calculation
+modlAMP
+
+# Library for testing
+pytest
