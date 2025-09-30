@@ -105,6 +105,14 @@ If no errors occur and `test_results` is created with output files, your install
 
 The entry point is `main.py`.
 
+---
+
+<p align="center">
+  <img src="/img/logo-use.png" alt="AMPidentifer in use on terminal"/>
+</p>
+
+---
+
 ### Arguments
 
 | Argument               | Description                                                                 | Required | Default |
