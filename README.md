@@ -1,6 +1,6 @@
-# AMPidentifier: A Tool for Antimicrobial Peptide (AMP) Prediction and Analysis
+# AMPidentifier: A Tool for Antimicrobial Peptide (AMP) Prediction and Physicochemical Assessment
 
-```python
+```python 
 
 ////////////////////////////////////////////////////////////////////////
 //                                                                    //
@@ -60,18 +60,6 @@ Beyond classification, AMPidentifier computes and exports dozens of physicochemi
 - **Model Selection:** Choose a specific internal model on demand.
 - **External Model Comparison:** Load external `.pkl` models for side-by-side comparison.
 - **Feature Generation:** Compute and export an extensive set of physicochemical descriptors.
-
----
-
-## Known Issues & Notes [!!!] 🐛
-
-> *"Where there's code, there's bug (🪲)!"* 
-
-### Potential Inconsistency in Charge (`charge`) Computation
-- **Description:** A potential inconsistency was identified in the computed charge (`charge`) values during feature extraction.
-- **Impact:** This affects one column in `physicochemical_features.csv` and may influence prediction performance to some extent.
-- **Status:** Under active investigation. We are cross-checking `modlamp` documentation and contacting maintainers.
-- **Recommendation:** Interpret the `charge` descriptor with caution until resolved. Overall model performance, particularly Random Forest, remains strong given the many other descriptors involved.
 
 ---
 
