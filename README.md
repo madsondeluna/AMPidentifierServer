@@ -158,7 +158,7 @@ Best values per metric are in **bold**.
 
 ---
 
-## Benchmarking (Real Data) 
+## Benchmarking (Using the Ensemble Mode) - Real Data 
 
 |                                | **Predicted: 0** (Negative) | **Predicted: 1** (Positive) | **Actual Total** |
 | :----------------------------- | :-------------------------: | :-------------------------: | :--------------: |
