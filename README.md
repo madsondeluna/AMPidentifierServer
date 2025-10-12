@@ -303,7 +303,7 @@ AMPidentifier/
 │   ├── prediction.py           # Load .pkl models and run inference
 │   └── reporting.py            # Generate .csv reports
 │
-├── normalization-info/         # 📚 Documentation about StandardScaler implementation
+├── normalization-info/         # Documentation about StandardScaler implementation
 │   ├── README.md               # Index of normalization documentation
 │   ├── normalization_impact_report.md  # Technical report (English)
 │   ├── resumo_normalizacao.md          # Executive summary (Portuguese)
