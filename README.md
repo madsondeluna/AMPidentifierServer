@@ -27,19 +27,10 @@ Beyond classification, AMPidentifier computes and exports dozens of physicochemi
 
 ## Key Updates
 
-### Feature Normalization Improved 
-- **StandardScaler Implementation**: All features are now normalized for better model performance
+### Feature Improved 
 - **Improved Accuracy**: Random Forest model achieves 88.45% accuracy (was lower without normalization)
 - **Better SVM Performance**: SVM benefits significantly from normalized features
 - **Consistent Predictions**: Scaler ensures reproducible results across runs
-
-For detailed information, see:
-- [normalization_impact_report.md](normalization-info/normalization_impact_report.md) - Technical details
-- [resumo_normalizacao.md](normalization-info/resumo_normalizacao.md) - Portuguese summary
-- [quick_start_normalized.md](normalization-info/quick_start_normalized.md) - Quick reference
-- [changelog.md](normalization-info/changelog.md) - Complete changelog
-
----
 
 
 ## Tool Workflow 
