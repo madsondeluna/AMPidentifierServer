@@ -81,7 +81,7 @@ git clone https://github.com/madsondeluna/AMPIdentifier.git
 cd AMPIdentifier
 
 # Create the environment
-python -m venv venv
+python3 -m venv venv
 
 # Activate (macOS/Linux)
 source venv/bin/activate
@@ -100,10 +100,7 @@ pip install -r requirements.txt
 Run a quick prediction using the sample data shipped with the repository:
 
 ```bash
-python main.py \
-  --input data-for-tests/sample_sequences.fasta \
-  --output_dir ./test_results \
-  --ensemble
+python3 main.py --input data-for-tests/sample_sequences.fasta --output_dir ./test_results --ensemble
 ```
 
 If no errors occur and `test_results` is created with output files, your installation is working.
@@ -136,21 +133,17 @@ The entry point is `main.py`.
 
 Single-model (Random Forest, default):
 ```bash
-python main.py --input my_sequences.fasta --output_dir ./results_rf
+python3 main.py --input my_sequences.fasta --output_dir ./results_rf
 ```
 
 Ensemble voting:
 ```bash
-python main.py --input my_sequences.fasta --output_dir ./results_ensemble --ensemble
+python3 main.py --input my_sequences.fasta --output_dir ./results_ensemble --ensemble
 ```
 
 Compare SVM with an external model:
 ```bash
-python main.py \
-  --input my_sequences.fasta \
-  --output_dir ./compare_svm \
-  --model svm \
-  --external_models /path/to/my_model.pkl
+python3 main.py --input my_sequences.fasta --output_dir ./compare_svm --model svm --external_models /path/to/my_model.pkl
 ```
 
 ---
@@ -184,6 +177,40 @@ Best values per metric are in **bold**.
 - Best overall performance across all metrics
 - Highest accuracy (88.45%) and AUC-ROC (0.9503)
 - Excellent balance between sensitivity and specificity
+
+---
+
+## Comparative Benchmarking
+
+AMPidentifier was designed to provide a robust, open-source alternative to existing AMP prediction tools. To ensure transparency and reproducibility, we benchmark AMPidentifier against other widely-used AMP classifiers, including both web-based servers and command-line tools.
+
+This comparison uses a standardized test dataset from the independent benchmark study by **Zulfiqar et al. (2024)**: "Machine Learning-Assisted Prediction and Generation of Antimicrobial Peptides" ([Small Sci. 2024, 2400579](https://onlinelibrary.wiley.com/doi/10.1002/smsc.202400579)). All tools are evaluated on the same dataset to ensure fair and unbiased comparison across multiple performance metrics. The goal is to position AMPidentifier within the current landscape of AMP prediction tools and highlight its strengths in ensemble learning and modular design.
+
+### Comparison with State-of-the-Art Tools
+
+**Benchmark Dataset:** Independent test set from Zulfiqar et al. (2024) - [DOI: 10.1002/smsc.202400579](https://onlinelibrary.wiley.com/doi/10.1002/smsc.202400579)
+
+| Tool                | Type       | Open Source | Modular | Ensemble | External Models | TP  | TN  | FP  | FN  | Reference/URL |
+|---------------------|------------|:-----------:|:-------:|:--------:|:---------------:|----:|----:|----:|----:|---------------|
+| **AMPidentifier**   | CLI/Local  | Yes         | Yes     | Yes      | Yes             | TBA | TBA | TBA | TBA | This work     |
+| AMPScanner v2       | Web        | TBA         | No      | TBA      | No              | TBA | TBA | TBA | TBA | TBA           |
+| iAMP-2L             | Web        | TBA         | No      | TBA      | No              | TBA | TBA | TBA | TBA | TBA           |
+| CAMPR3              | Web        | TBA         | No      | TBA      | No              | TBA | TBA | TBA | TBA | TBA           |
+| AMPlify             | CLI/Web    | TBA         | TBA     | TBA      | TBA             | TBA | TBA | TBA | TBA | TBA           |
+| AMPDiscover         | CLI        | TBA         | TBA     | TBA      | TBA             | TBA | TBA | TBA | TBA | TBA           |
+
+**Column Descriptions:**
+- **Type:** Deployment format (Web-based server, CLI tool, or Local application)
+- **Open Source:** Publicly available source code (Yes/No)
+- **Modular:** Can individual models (RF, SVM, GB) be used separately? (Yes/No)
+- **Ensemble:** Supports ensemble/voting prediction across multiple models? (Yes/No)
+- **External Models:** Allows integration of user-provided custom models (.pkl)? (Yes/No)
+- **TP (True Positive):** Number of correctly predicted AMP sequences
+- **TN (True Negative):** Number of correctly predicted non-AMP sequences
+- **FP (False Positive):** Number of non-AMP sequences incorrectly predicted as AMP
+- **FN (False Negative):** Number of AMP sequences incorrectly predicted as non-AMP
+
+**Note:** Benchmarking is currently in progress. Results will be updated as comparative experiments are completed using the standardized independent test set from Zulfiqar et al. (2024). All tools will be evaluated under identical conditions to ensure fair comparison. The confusion matrix values (TP, TN, FP, FN) provide a direct view of prediction performance across all tools.
 
 ---
 
