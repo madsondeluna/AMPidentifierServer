@@ -123,11 +123,11 @@ The entry point is `main.py`.
 
 | Argument               | Description                                                                 | Required | Default |
 |------------------------|-----------------------------------------------------------------------------|:--------:|:-------:|
-| `-i, --input`          | Path to the input FASTA file                                                |   Yes    |   —     |
-| `-o, --output_dir`     | Path to the output directory                                                |   Yes    |   —     |
+| `-i, --input`          | Path to the input FASTA file                                                |   Yes    |   -     |
+| `-o, --output_dir`     | Path to the output directory                                                |   Yes    |   -     |
 | `-m, --model`          | Internal model to use: `rf`, `svm`, `gb`                                    |    No    |  `rf`   |
 | `--ensemble`           | Enable majority-vote ensemble across all internal models                    |    No    |  Flag   |
-| `-e, --external_models`| One or more paths to external `.pkl` models for comparison (comma-separated)|    No    |   —     |
+| `-e, --external_models`| One or more paths to external `.pkl` models for comparison (comma-separated)|    No    |   -     |
 
 ### Examples
 
@@ -377,25 +377,25 @@ The goal is to position AMPidentifier within the current landscape of AMP predic
 
 ### Lead Developer
 
-- **Madson A. de Luna Aragão** — PhD Candidate in Bioinformatics, UFMG  
+- **Madson A. de Luna Aragão** - PhD Candidate in Bioinformatics, UFMG  
   Belo Horizonte, Minas Gerais, Brazil  
   **Responsibilities:** project lead, software architecture, ML pipelines, documentation.  
   **Contacts:** madsondeluna@gmail.com 
 
 ### Collaborators
 
-- **Rafael L. da Silva** — Masters Student, UFPE — Collaborator  
+- **Rafael L. da Silva** - Masters Student, UFPE - Collaborator  
   **Contributions:** data preprocessing, pipeline testing, literature review.
 
 ### Advisory Team
 
-- **Ana M. Benko‑Iseppon, PhD** — Principal Investigator, UFPE — Advisor  
+- **Ana M. Benko‑Iseppon, PhD** - Principal Investigator, UFPE - Advisor  
   **Contributions:** scientific supervision, study design, biological validation.
 
-- **João Pacífico, PhD** — Principal Investigator, UPE — Co‑Advisor  
+- **João Pacífico, PhD** - Principal Investigator, UPE - Co‑Advisor  
   **Contributions:** computational analysis review, dataset curation, evaluation protocol, reproducibility.
 
-- **Carlos A. dos Santos-Silva, PhD** — Professor, CESMAC — Co‑Advisor  
+- **Carlos A. dos Santos-Silva, PhD** - Professor, CESMAC - Co‑Advisor  
   **Contributions:** structural biology expertise, evaluation protocol, benchmarking strategy, reproducibility.
 
 ---
@@ -415,15 +415,15 @@ The goal is to position AMPidentifier within the current landscape of AMP predic
 
 ## Funding & Acknowledgments
 
-- **Principal Holder:** This software is officially registered under the **UFPE** — Universidade Federal de Pernambuco (Federal University of Pernambuco, Brazil).
-- This research was supported by **FACEPE** — Fundação de Amparo à Pesquisa do Estado de Pernambuco (Brazil).
-- We acknowledge the **PPGGBM** — Programa de Pós-Graduação em Genética e Biologia Molecular (Graduate Program in Genetics and Molecular Biology) at UFPE for institutional support.
+- **Principal Holder:** This software is officially registered under the **UFPE** - Universidade Federal de Pernambuco (Federal University of Pernambuco, Brazil).
+- This research was supported by **FACEPE** - Fundação de Amparo à Pesquisa do Estado de Pernambuco (Brazil).
+- We acknowledge the **PPGGBM** - Programa de Pós-Graduação em Genética e Biologia Molecular (Graduate Program in Genetics and Molecular Biology) at UFPE for institutional support.
 
 ---
 
 ## Intellectual Property
 
-- This tool is **officially registered** with the **INPI** — Instituto Nacional da Propriedade Industrial (Brazilian National Institute of Industrial Property).
+- This tool is **officially registered** with the **INPI** - Instituto Nacional da Propriedade Industrial (Brazilian National Institute of Industrial Property).
 - **Registration Number:** BR 51 2025 005859-4
 - **Registration Date:** November 18, 2025
 - **Title:** AMPidentifier: A modular python toolkit for predicting antimicrobial peptides using ensemble machine learning
