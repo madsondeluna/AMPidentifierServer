@@ -427,7 +427,7 @@ The goal is to position AMPidentifier within the current landscape of AMP predic
 - **Registration Number:** BR 51 2025 005859-4
 - **Registration Date:** November 18, 2025
 - **Title:** AMPidentifier: A modular python toolkit for predicting antimicrobial peptides using ensemble machine learning
-- **Registered Authors:** Madson Aslan de Luna Aragão, Rafael Lins da Silva, João Pacífico Bezerra Neto, Carlos Alberto dos Santos Silva, Ana Maria Benko-Iseppon
+- **Registered Authors:** Madson A. de Luna Aragão, Rafael L. da Silva, João Pacífico, Carlos A. dos Santos-Silva, Ana M. Benko-Iseppon
 - All rights reserved. Usage and distribution are subject to the project license terms.
 
 ---
