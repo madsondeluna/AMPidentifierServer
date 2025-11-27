@@ -53,6 +53,12 @@
     - [Quick Reference (tabular)](#quick-reference-tabular)
   - [Funding \& Acknowledgments](#funding--acknowledgments)
   - [Intellectual Property](#intellectual-property)
+  - [Contributing](#contributing)
+    - [Reporting Issues](#reporting-issues)
+      - [Reporting a Bug](#reporting-a-bug)
+      - [Suggesting Features or Improvements](#suggesting-features-or-improvements)
+    - [Feature Requests \& Roadmap](#feature-requests--roadmap)
+    - [Code of Conduct](#code-of-conduct)
   - [How to Cite](#how-to-cite)
 
 ---
@@ -536,6 +542,107 @@ Comparative benchmarking experiments against other AMP prediction tools are curr
 - **Title:** AMPidentifier: A modular python toolkit for predicting antimicrobial peptides using ensemble machine learning
 - **Registered Authors:** Madson A. de Luna Aragão, Rafael L. da Silva, João Pacífico, Carlos A. dos Santos-Silva, Ana M. Benko-Iseppon
 - All rights reserved. Usage and distribution are subject to the project license terms.
+
+---
+
+## Contributing
+
+We welcome contributions from the community! Whether you want to report bugs, suggest new features, improve documentation, or contribute code, your input is valuable.
+
+### Reporting Issues
+
+Found a bug or have a suggestion? Please open an issue on GitHub!
+
+#### Reporting a Bug
+
+When reporting a bug, please include:
+
+1. **Clear Title**: Brief description of the problem
+2. **Environment Details**:
+   - Operating System (macOS, Linux, Windows)
+   - Python version (`python3 --version`)
+   - AMPidentifier version/commit
+3. **Steps to Reproduce**:
+   - Exact commands you ran
+   - Input files (if possible, share a minimal example)
+4. **Expected vs Actual Behavior**:
+   - What you expected to happen
+   - What actually happened
+5. **Error Messages**:
+   - Full error traceback
+   - Log files (if applicable)
+
+**Example Bug Report:**
+```
+Title: "Ensemble mode fails with external models on macOS"
+
+Environment:
+- macOS 14.2
+- Python 3.11.5
+- Commit: abc123
+
+Steps to reproduce:
+1. Run: python3 main.py --input test.fasta --output_dir ./out --ensemble --external_models custom.pkl
+2. Error occurs during model loading
+
+Expected: All models should load and run ensemble prediction
+Actual: KeyError when loading external model
+
+Error message:
+KeyError: 'feature_names'
+[full traceback here]
+```
+
+#### Suggesting Features or Improvements
+
+When suggesting a new feature:
+
+1. **Clear Title**: Concise feature description
+2. **Use Case**: Explain why this feature would be useful
+3. **Proposed Solution**: Describe how you envision it working
+4. **Alternatives**: Any alternative approaches you've considered
+5. **Additional Context**: Examples, references, or mockups
+
+**Example Feature Request:**
+```
+Title: "Add support for CSV input format"
+
+Use Case:
+Many users have peptide sequences in CSV files with additional metadata.
+Supporting CSV input would eliminate the need for format conversion.
+
+Proposed Solution:
+Add a --format flag:
+python3 main.py --input sequences.csv --format csv --output_dir ./results
+
+CSV should have columns: id, sequence, [optional metadata]
+
+Alternatives:
+- Provide a conversion script (less convenient)
+- Support Excel files directly (more complex)
+
+Additional Context:
+Similar tools like ToolX support CSV input via pandas.
+```
+
+### Feature Requests & Roadmap
+
+We're constantly working to improve AMPidentifier. Some areas we're exploring:
+
+- **Activity-specific models**: Separate models for antibacterial, antifungal, and antiviral peptides
+- **Deep learning integration**: Support for transformer-based models
+- **Web interface**: Browser-based GUI for easier access
+- **API endpoint**: RESTful API for programmatic access
+- **Additional descriptors**: Integration with more feature calculation libraries
+
+If you have ideas for other features, please open an issue with the tag `enhancement`!
+
+### Code of Conduct
+
+- Be respectful and constructive
+- Provide clear and detailed information
+- Focus on the problem, not the person
+- Help create a welcoming environment for all contributors
 
 ---
 
