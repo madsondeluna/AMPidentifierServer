@@ -16,6 +16,30 @@
 
 ```
 
+## Table of Contents
+
+- [About](#about)
+- [Key Updates](#key-updates)
+- [Tool Workflow](#tool-workflow)
+- [Key Features](#key-features)
+- [Installation](#installation)
+- [Quick Test](#quick-test)
+- [How to Use (CLI)](#how-to-use-cli)
+- [Pre-Trained Internal Models](#pre-trained-internal-models)
+- [Benchmarking (Using the Ensemble Mode)](#benchmarking-using-the-ensemble-mode---real-data)
+- [Outputs](#outputs)
+- [Training Your Own Models](#training-your-own-models)
+- [Project Structure](#project-structure)
+- [Comparative Benchmarking](#comparative-benchmarking)
+- [Contributors](#contributors)
+- [Funding & Acknowledgments](#funding--acknowledgments)
+- [Intellectual Property](#intellectual-property)
+- [How to Cite](#how-to-cite)
+
+---
+
+## About
+
 The **AMPidentifier** is a Python tool for predicting and analyzing Antimicrobial Peptides (AMPs) from amino-acid sequences. It leverages a set of pre-trained Machine Learning models with **StandardScaler normalization** and offers flexible prediction modes, including an ensemble voting system, to provide robust results.
 
 **Unlike web servers or closed-source tools**, AMPidentifier operates as a **fully open and modular framework**. It includes pre-trained models (Random Forest, SVM, Gradient Boosting) that work both **individually** and in **ensemble mode**. Users can also **integrate external models** (`.pkl` files) to expand their analyses and compare different approaches side-by-side.
@@ -32,18 +56,60 @@ Beyond classification, AMPidentifier computes and exports dozens of physicochemi
 - **Consistent Predictions**: Scaler ensures reproducible results across runs
 
 
-## Tool Workflow 
+## Tool Workflow
 
-- [Input: FASTA file](#arguments)
-  - processed by [AMPidentifier CLI](#how-to-use-cli)
-    - → [Physicochemical Feature Extraction](#key-features)
-      - produces [features.csv](#outputs)
-    - → [Model Inference](#how-to-use-cli)
-      - via [Model Selection](#arguments)
-        - run a [Single Internal Model (RF, SVM, GB)](#pre-trained-internal-models)
-        - or enable [Ensemble Mode (Voting)](#arguments)
-        - or add [External Model Comparison](#arguments)
-      - produces [predictions.csv](#outputs)
+<p align="center">
+  <img src="/img/workflow.svg" alt="AMPidentifier Workflow Diagram"/>
+</p>
+
+The AMPidentifier pipeline follows a modular workflow that processes peptide sequences through feature extraction and machine learning-based classification:
+
+### Workflow Steps
+
+1. **Input FASTA File**
+   - Users provide amino acid sequences in standard FASTA format
+   - Multiple sequences can be processed in a single run
+
+2. **AMPidentifier CLI (`main.py`)**
+   - Command-line interface serving as the entry point
+   - Orchestrates the entire prediction pipeline
+   - Handles user arguments and configuration
+
+3. **Parallel Processing Branches**
+
+   **Branch A: Feature Extraction**
+   - Computes physicochemical descriptors using `modlamp` library
+   - Applies StandardScaler normalization (essential for model performance)
+   - Generates `physicochemical_features.csv` with detailed sequence properties
+   - These features serve as input for the prediction models
+
+   **Branch B: Model Selection**
+   - Users choose one of three prediction strategies:
+     - **Single Model**: Select one algorithm (RF, SVM, or GB)
+     - **Ensemble Mode**: Combines all three models through majority voting (recommended)
+     - **External Models**: Load custom `.pkl` models for comparison
+
+4. **Model Inference**
+   - Applies selected model(s) to normalized features
+   - Three internal models available:
+     - **RF**: Random Forest (best single-model performance)
+     - **SVM**: Support Vector Machine
+     - **GB**: Gradient Boosting
+   - Optional: External models can be included for benchmarking
+
+5. **Output Generation**
+   - `prediction_comparison_report.csv`: Contains classification results
+     - AMP vs non-AMP predictions
+     - Confidence scores per model
+     - Side-by-side model comparison
+     - Consensus prediction (in ensemble mode)
+
+### Key Characteristics
+
+- **Modular Design**: Each component operates independently and can be used separately
+- **Flexible Model Selection**: Supports single models, ensemble voting, and external model integration
+- **Normalized Features**: StandardScaler ensures consistent and optimal model performance
+- **Comprehensive Output**: Both feature tables and prediction reports are generated for downstream analysis
 
 ---
 
