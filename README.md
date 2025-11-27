@@ -366,14 +366,14 @@ All sequences are stored in `benchmarking/base/` directory as FASTA files (`bact
 
 ### Comparison with State-of-the-Art Tools
 
-| Tool                | Acc (%) | Antibacterial | Antifungal | Antiviral | Type       | Open Source | Modular | Ensemble | External Models |
-|---------------------|--------:|:-------------:|:----------:|:---------:|------------|:-----------:|:-------:|:--------:|:---------------:|
-| **AMPidentifier**   | TBA     | TBA           | TBA        | TBA       | CLI/Local  | Yes         | Yes     | Yes      | Yes             |
-| AMPScanner v2       | TBA     | TBA           | TBA        | TBA       | Web        | TBA         | No      | TBA      | No              |
-| iAMP-2L             | TBA     | TBA           | TBA        | TBA       | Web        | TBA         | No      | TBA      | No              |
-| CAMPR3              | TBA     | TBA           | TBA        | TBA       | Web        | TBA         | No      | TBA      | No              |
-| AMPlify             | TBA     | TBA           | TBA        | TBA       | CLI/Web    | TBA         | TBA     | TBA      | TBA             |
-| AMPDiscover         | TBA     | TBA           | TBA        | TBA       | CLI        | TBA         | TBA     | TBA      | TBA             |
+| Tool                | Acc (%) | Antibacterial | Antifungal | Antiviral | Type       | Open Source | Modular | Models Available | Ensemble | External Models |
+|---------------------|--------:|:-------------:|:----------:|:---------:|------------|:-----------:|:-------:|:----------------:|:--------:|:---------------:|
+| **AMPidentifier**   | TBA     | TBA           | TBA        | TBA       | CLI/Local  | Yes         | Yes     | RF, SVM, GB      | Yes      | Yes             |
+| AMPScanner v2       | TBA     | TBA           | TBA        | TBA       | Web        | TBA         | No      | TBA              | TBA      | No              |
+| iAMP-2L             | TBA     | TBA           | TBA        | TBA       | Web        | TBA         | No      | TBA              | TBA      | No              |
+| CAMPR3              | TBA     | TBA           | TBA        | TBA       | Web        | TBA         | Yes     | SVM, RF, ANN, DA | TBA      | No              |
+| AMPlify             | TBA     | TBA           | TBA        | TBA       | CLI/Web    | TBA         | TBA     | TBA              | TBA      | TBA             |
+| AMPDiscover         | TBA     | TBA           | TBA        | TBA       | CLI        | TBA         | TBA     | TBA              | TBA      | TBA             |
 
 **Column Descriptions:**
 - **Acc (%):** Overall accuracy percentage on the benchmark dataset, calculated as (TP + TN) / (TP + TN + FP + FN) × 100, where TP = True Positives, TN = True Negatives, FP = False Positives, FN = False Negatives
@@ -382,7 +382,8 @@ All sequences are stored in `benchmarking/base/` directory as FASTA files (`bact
 - **Antiviral:** Accuracy on antiviral peptide subset, calculated as correctly predicted antiviral sequences / total antiviral sequences × 100
 - **Type:** Deployment format (Web-based server, CLI tool, or Local application)
 - **Open Source:** Publicly available source code (Yes/No)
-- **Modular:** Can individual models (RF, SVM, GB) be used separately? (Yes/No)
+- **Modular:** Can individual models be used separately? (Yes/No)
+- **Models Available:** Machine learning algorithms available in the tool (RF = Random Forest, SVM = Support Vector Machine, GB = Gradient Boosting, ANN = Artificial Neural Network, DA = Discriminant Analysis)
 - **Ensemble:** Supports ensemble/voting prediction across multiple models? (Yes/No)
 - **External Models:** Allows integration of user-provided custom models (.pkl)? (Yes/No)
 
