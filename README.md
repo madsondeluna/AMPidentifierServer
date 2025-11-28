@@ -35,7 +35,7 @@
     - [Examples](#examples)
   - [Pre-Trained Internal Models](#pre-trained-internal-models)
     - [Performance Summary](#performance-summary)
-  - [Benchmarking (Using the Ensemble Mode) - Real Data](#benchmarking-using-the-ensemble-mode---real-data)
+  - [Ensemble Mode Performance](#ensemble-mode-performance)
     - [Table Explanation](#table-explanation)
     - [The four central quadrants represent the classification results:](#the-four-central-quadrants-represent-the-classification-results)
       - [Understanding Type I and Type II Errors](#understanding-type-i-and-type-ii-errors)
@@ -271,9 +271,7 @@ Best values per metric are in **bold**.
 
 ---
 
-## Benchmarking (Using the Ensemble Mode) - Real Data 
-
-**Performance with Normalized Models (StandardScaler)**
+## Ensemble Mode Performance
 
 |                                | **Predicted: 0** (Negative) | **Predicted: 1** (Positive) | **Actual Total** |
 | :----------------------------- | :-------------------------: | :-------------------------: | :--------------: |
@@ -430,7 +428,7 @@ AMPidentifier/
 
 ---
 
-## Comparative Benchmarking
+## Comparative Benchmarking 
 
 AMPidentifier was designed to provide a robust, open-source alternative to existing AMP prediction tools. To ensure transparency and reproducibility, we benchmark AMPidentifier against other widely-used AMP classifiers, including both web-based servers and command-line tools.
 
