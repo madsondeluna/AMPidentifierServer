@@ -566,7 +566,6 @@ AMPidentifier/
 - [ ] Implement error handling and retry logic
 - [ ] Add request validation and sanitization
 
-**Estimated Time:** 2-4 hours  
 **Complexity:** Medium
 
 **Phase 2: Enhanced Functionality (Priority: Medium)**
@@ -578,7 +577,6 @@ AMPidentifier/
 - [ ] Progress indicators for long predictions
 - [ ] Input validation and error messages
 
-**Estimated Time:** 8-12 hours  
 **Complexity:** Medium
 
 **Phase 3: Advanced Features (Priority: Low)**
@@ -590,8 +588,7 @@ AMPidentifier/
 - [ ] Asynchronous job queue (Celery)
 - [ ] Email notifications
 - [ ] Admin dashboard
-
-**Estimated Time:** 20-30 hours  
+ 
 **Complexity:** High
 
 **Phase 4: Optimization (Priority: Ongoing)**
@@ -604,7 +601,6 @@ AMPidentifier/
 - [ ] Error tracking (Sentry)
 - [ ] API documentation (Swagger/OpenAPI)
 
-**Estimated Time:** 4-6 hours  
 **Complexity:** Low
 
 ---
