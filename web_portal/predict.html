@@ -17,7 +17,7 @@
     <nav class="navbar">
         <div class="navbar-container">
             <a href="index.html" class="navbar-brand">
-                🧬 AMPidentifier
+                ⟨⟩ AMPidentifier
             </a>
             <ul class="navbar-nav">
                 <li><a href="index.html" class="nav-link">Home</a></li>
@@ -58,7 +58,7 @@
                         <div class="form-group">
                             <button type="button" id="load-example" class="btn btn-secondary"
                                 data-example=">sp|P0C8L5|AMP1_HUMAN Antimicrobial peptide 1&#10;KRIVQRIKDFLRNLVPRTES&#10;>sp|P81534|DEF1_PHAVU Defensin-1&#10;RTCESQSHKFKGQCRDDFCYTKQCVVNKACHVGGRCVKPFCCK&#10;>sp|P0DJI8|DEF1_HUMAN Defensin-1&#10;DCYCRIPACIAGERRYGTCIYQGRLWAFCC">
-                                📋 Carregar Exemplo
+                                ▫ Carregar Exemplo
                             </button>
                         </div>
 
@@ -67,22 +67,22 @@
                                 Modelo de Predição
                             </label>
                             <select id="model-select" class="form-control">
-                                <option value="ensemble" selected>🎯 Ensemble (Recomendado) - Combina RF + SVM + GB
+                                <option value="ensemble" selected>◆ Ensemble (Recomendado) - Combina RF + SVM + GB
                                 </option>
-                                <option value="rf">🌲 Random Forest - Melhor acurácia individual (88.45%)</option>
-                                <option value="svm">⚡ Support Vector Machine - Alta precisão (88.80%)</option>
-                                <option value="gb">📊 Gradient Boosting - Boa generalização (85.85%)</option>
+                                <option value="rf">▲ Random Forest - Melhor acurácia individual (88.45%)</option>
+                                <option value="svm">● Support Vector Machine - Alta precisão (88.80%)</option>
+                                <option value="gb">■ Gradient Boosting - Boa generalização (85.85%)</option>
                             </select>
                         </div>
 
                         <div class="alert alert-info">
-                            <strong>💡 Dica:</strong> O modo Ensemble combina os três modelos através de votação
+                            <strong>▸ Dica:</strong> O modo Ensemble combina os três modelos através de votação
                             majoritária,
                             proporcionando predições mais robustas e confiáveis. Recomendado para uso geral.
                         </div>
 
                         <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem;">
-                            🚀 Executar Predição
+                            ▶ Executar Predição
                         </button>
                     </form>
                 </div>
@@ -115,10 +115,10 @@
                 <div class="glass-card" style="margin-bottom: 2rem;">
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-                        <h3 style="margin: 0;">📊 Predições</h3>
+                        <h3 style="margin: 0;">▦ Predições</h3>
                         <div style="display: flex; gap: 0.5rem;">
                             <button onclick="downloadPredictions('csv')" class="btn btn-success">
-                                💾 Download CSV
+                                ▼ Download CSV
                             </button>
                         </div>
                     </div>
@@ -131,10 +131,10 @@
                 <div class="glass-card">
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
-                        <h3 style="margin: 0;">🔬 Features Físico-Químicas</h3>
+                        <h3 style="margin: 0;">◇ Features Físico-Químicas</h3>
                         <div style="display: flex; gap: 0.5rem;">
                             <button onclick="downloadFeatures('csv')" class="btn btn-success">
-                                💾 Download CSV
+                                ▼ Download CSV
                             </button>
                         </div>
                     </div>
@@ -146,7 +146,7 @@
                 <!-- New Prediction Button -->
                 <div style="text-align: center; margin-top: 2rem;">
                     <button onclick="window.location.reload()" class="btn btn-secondary">
-                        🔄 Nova Predição
+                        ↻ Nova Predição
                     </button>
                 </div>
             </section>
@@ -155,7 +155,7 @@
             <section style="margin-top: 3rem;">
                 <div class="grid grid-2">
                     <div class="glass-card">
-                        <h3 style="color: #667eea; margin-bottom: 1rem;">📝 Formato FASTA</h3>
+                        <h3 style="color: #667eea; margin-bottom: 1rem;">▫ Formato FASTA</h3>
                         <p class="text-secondary" style="margin-bottom: 1rem;">
                             O formato FASTA é um formato de texto para representar sequências de nucleotídeos ou
                             peptídeos:
@@ -169,7 +169,7 @@ ANOTHERSEQUENCE</pre>
                     </div>
 
                     <div class="glass-card">
-                        <h3 style="color: #667eea; margin-bottom: 1rem;">⚙️ Sobre os Modelos</h3>
+                        <h3 style="color: #667eea; margin-bottom: 1rem;">◆ Sobre os Modelos</h3>
                         <ul style="color: var(--text-secondary); line-height: 1.8;">
                             <li><strong>Random Forest:</strong> Melhor acurácia geral (88.45%)</li>
                             <li><strong>SVM:</strong> Alta precisão e especificidade</li>
@@ -242,13 +242,19 @@ ANOTHERSEQUENCE</pre>
                     const alert = document.createElement('div');
                     alert.className = 'alert alert-info';
                     alert.style.marginTop = '1rem';
-                    alert.innerHTML = '<strong>ℹ️ Modo Demonstração:</strong> Estes são resultados de exemplo. Para predições reais, você precisa configurar a API backend.';
+                    alert.innerHTML = '<strong>▸ Modo Demonstração:</strong> Estes são resultados de exemplo. Para predições reais, você precisa configurar a API backend.';
                     document.getElementById('results-container').insertBefore(alert, document.getElementById('results-container').firstChild);
 
                 } catch (error) {
                     console.error('Prediction error:', error);
-                    showError(error.message || 'Erro ao processar predição. Verifique a configuração da API.');
                     hideLoading();
+
+                    // Se for erro de JSON, mostrar mensagem específica
+                    if (error.message && error.message.includes('JSON')) {
+                        showError('▸ Modo Demonstração Ativo: Este portal está configurado apenas para visualização. Para predições reais, use a ferramenta CLI do AMPidentifier ou configure uma API backend.');
+                    } else {
+                        showError(error.message || 'Erro ao processar predição.');
+                    }
                 }
             });
         }
