@@ -1,6 +1,6 @@
-# AMPidentifier
+# AMPidentifier - Server
 
-> A modular Python toolkit for predicting antimicrobial peptides using ensemble machine learning and physicochemical descriptors
+> The server component of the AMPidentifier project
 
 [![Live Demo](https://img.shields.io/badge/demo-live-success)](https://madsondeluna.github.io/AMPidentifier)
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
@@ -111,47 +111,6 @@ See [CLI Usage](#cli-usage) for detailed documentation.
 
 ![AMPidentifier Workflow](img/workflow.svg)
 
-### Pipeline Architecture
-
-```
-┌─────────────────┐
-│  Input FASTA    │
-│  Sequences      │
-└────────┬────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Feature Extraction (modlamp)      │
-│  - Physicochemical descriptors     │
-│  - Hydrophobicity, charge, pI      │
-│  - Secondary structure prediction  │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Normalization (StandardScaler)    │
-│  - Feature scaling                 │
-│  - Consistent model input          │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Model Selection                   │
-│  ┌─────────┬─────────┬──────────┐  │
-│  │   RF    │   SVM   │    GB    │  │
-│  └─────────┴─────────┴──────────┘  │
-│         │                           │
-│         ▼                           │
-│  Ensemble Voting (Optional)        │
-└────────┬────────────────────────────┘
-         │
-         ▼
-┌─────────────────────────────────────┐
-│  Output                            │
-│  - prediction_report.csv           │
-│  - physicochemical_features.csv    │
-└─────────────────────────────────────┘
-```
 
 ### Workflow Steps
 
@@ -239,10 +198,7 @@ See [CLI Usage](#cli-usage) for detailed documentation.
 Run a prediction using sample data:
 
 ```bash
-python3 main.py \
-  --input data-for-tests/sequences_to_predict.fasta \
-  --output_dir ./test_results \
-  --ensemble
+python3 main.py --input data-for-tests/sequences_to_predict.fasta --output_dir ./test_results --ensemble
 ```
 
 **Expected Output:**
@@ -409,26 +365,17 @@ python3 main.py --input <fasta_file> --output_dir <output_directory> [options]
 
 **Single Model (Random Forest):**
 ```bash
-python3 main.py \
-  --input sequences.fasta \
-  --output_dir ./results_rf
+python3 main.py --input sequences.fasta --output_dir ./results_rf
 ```
 
 **Ensemble Mode (Recommended):**
 ```bash
-python3 main.py \
-  --input sequences.fasta \
-  --output_dir ./results_ensemble \
-  --ensemble
+python3 main.py --input sequences.fasta --output_dir ./results_ensemble --ensemble
 ```
 
 **With External Model:**
 ```bash
-python3 main.py \
-  --input sequences.fasta \
-  --output_dir ./results_comparison \
-  --model svm \
-  --external_models /path/to/custom_model.pkl
+python3 main.py --input sequences.fasta --output_dir ./results_comparison --model svm --external_models /path/to/custom_model.pkl
 ```
 
 ### Output Files
