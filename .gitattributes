@@ -1,0 +1,2 @@
+# Prevent macOS from creating ._* files
+* -crlf
