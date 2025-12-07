@@ -48,3 +48,9 @@ htmlcov/
 test_progress/
 data-for-tests/results_*/
 *.log
+
+# Web Portal
+web_portal/__pycache__/
+web_portal/*.pyc
+web_portal/.flask_cache/
+web_portal/instance/
