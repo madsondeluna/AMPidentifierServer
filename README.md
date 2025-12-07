@@ -1,5 +1,11 @@
 # AMPidentifier
-> A Tool for Antimicrobial Peptide (AMP) Prediction and Fast Physicochemical Assessment
+
+> A modular Python toolkit for predicting antimicrobial peptides using ensemble machine learning and physicochemical descriptors
+
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://madsondeluna.github.io/AMPidentifier)
+[![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![INPI](https://img.shields.io/badge/INPI-BR%2051%202025%20005859--4-green.svg)](https://www.gov.br/inpi)
 
 ```
 ////////////////////////////////////////////////////////////////////////
@@ -18,636 +24,749 @@
 
 ## Table of Contents
 
-- [AMPidentifier](#ampidentifier)
-  - [Table of Contents](#table-of-contents)
-  - [About](#about)
-  - [Key Updates](#key-updates)
-    - [Feature Improved](#feature-improved)
-  - [Tool Workflow](#tool-workflow)
-    - [Workflow Steps](#workflow-steps)
-    - [Key Characteristics](#key-characteristics)
-    - [Quick Links Map](#quick-links-map)
-  - [Key Features](#key-features)
-  - [Installation](#installation)
-  - [Quick Test](#quick-test)
-  - [How to Use (CLI)](#how-to-use-cli)
-    - [Arguments](#arguments)
-    - [Examples](#examples)
-  - [Pre-Trained Internal Models](#pre-trained-internal-models)
-    - [Performance Summary](#performance-summary)
-  - [Ensemble Mode Performance](#ensemble-mode-performance)
-    - [Table Explanation](#table-explanation)
-    - [The four central quadrants represent the classification results:](#the-four-central-quadrants-represent-the-classification-results)
-      - [Understanding Type I and Type II Errors](#understanding-type-i-and-type-ii-errors)
-  - [Outputs](#outputs)
-  - [Training Your Own Models](#training-your-own-models)
-  - [Project Structure](#project-structure)
-    - [Key Components](#key-components)
-  - [Comparative Benchmarking](#comparative-benchmarking)
-    - [Benchmark Dataset Description](#benchmark-dataset-description)
-    - [Comparison with State-of-the-Art Tools](#comparison-with-state-of-the-art-tools)
-  - [Contributors](#contributors)
-    - [Lead Developer](#lead-developer)
-    - [Collaborators](#collaborators)
-    - [Advisory Team](#advisory-team)
-    - [Quick Reference (tabular)](#quick-reference-tabular)
-  - [Funding \& Acknowledgments](#funding--acknowledgments)
-  - [Intellectual Property](#intellectual-property)
-  - [Contributing](#contributing)
-    - [Reporting Issues](#reporting-issues)
-      - [Reporting a Bug](#reporting-a-bug)
-      - [Suggesting Features or Improvements](#suggesting-features-or-improvements)
-    - [Feature Requests \& Roadmap](#feature-requests--roadmap)
-    - [Code of Conduct](#code-of-conduct)
-  - [How to Cite](#how-to-cite)
+- [Overview](#overview)
+- [Web Portal](#web-portal)
+- [CLI Tool](#cli-tool)
+- [Workflow](#workflow)
+- [Technology Stack](#technology-stack)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Performance Metrics](#performance-metrics)
+- [Web Portal Details](#web-portal-details)
+- [CLI Usage](#cli-usage)
+- [Model Training](#model-training)
+- [Project Structure](#project-structure)
+- [Limitations and Next Steps](#limitations-and-next-steps)
+- [Contributing](#contributing)
+- [Citation](#citation)
+- [License](#license)
 
 ---
 
-## About
+## Overview
 
-The **AMPidentifier** is a Python tool for predicting and analyzing Antimicrobial Peptides (AMPs) from amino-acid sequences. It leverages a set of pre-trained Machine Learning models and offers flexible prediction modes, including an ensemble voting system, to provide robust results.
+AMPidentifier is a comprehensive toolkit for antimicrobial peptide (AMP) prediction, offering both a **command-line interface** for local analysis and a **web portal** for accessible, user-friendly interaction. The tool leverages ensemble machine learning (Random Forest, SVM, Gradient Boosting) to provide robust AMP classification with detailed physicochemical feature analysis.
 
-**Unlike web servers or closed-source tools**, AMPidentifier operates as a **fully open and modular framework**. It includes pre-trained models (Random Forest, SVM, Gradient Boosting) that work both **individually** and in **ensemble mode**. Users can also **integrate external models** (`.pkl` files) to expand their analyses and compare different approaches side-by-side.
+### Key Capabilities
 
-Beyond classification, AMPidentifier computes and exports dozens of physicochemical descriptors for each sequence (via `modlamp`) and bundles them into a detailed report.
+- **Ensemble Learning:** Majority voting across three ML models for robust predictions
+- **Physicochemical Analysis:** Comprehensive feature extraction via modlamp library
+- **Dual Interface:** CLI for batch processing + Web portal for interactive use
+- **Open Source:** Fully transparent, modular architecture
+- **High Performance:** 87.47% accuracy in ensemble mode, 88.45% with Random Forest
+- **Flexible Deployment:** Local execution or cloud-based API
 
 ---
 
-## Key Updates
+## Web Portal
 
-### Feature Improved 
-- **Improved Accuracy**: Random Forest model achieves 88.45% accuracy (was lower without normalization)
-- **Better SVM Performance**: SVM benefits significantly from normalized features
-- **Consistent Predictions**: Scaler ensures reproducible results across runs
+**Live Demo:** https://madsondeluna.github.io/AMPidentifier
 
+A minimalist, responsive web interface featuring:
 
-## Tool Workflow
+- Modern liquid glass design aesthetic
+- Interactive FASTA sequence input
+- Real-time model selection (RF/SVM/GB/Ensemble)
+- Tabular results display with CSV export
+- Comprehensive project documentation
 
-<p align="center">
-  <img src="/img/workflow.svg" alt="AMPidentifier Workflow Diagram"/>
-</p>
+### Current Status
 
-The AMPidentifier pipeline follows a modular workflow that processes peptide sequences through feature extraction and machine learning-based classification:
+**Available:**
+- Static frontend deployed on GitHub Pages
+- Demo mode with mock data
+- Full UI/UX functionality
+- Responsive design (mobile/tablet/desktop)
+
+**In Development:**
+- Backend API for real predictions
+- File upload functionality
+- Prediction history
+- User authentication
+
+See [Web Portal Details](#web-portal-details) for technical specifications.
+
+---
+
+## CLI Tool
+
+Full-featured command-line interface for local AMP prediction:
+
+```bash
+python3 main.py --input sequences.fasta --output_dir ./results --ensemble
+```
+
+**Features:**
+- Batch processing of FASTA files
+- Single model or ensemble mode
+- External model integration (.pkl files)
+- Comprehensive CSV reports
+- Physicochemical feature extraction
+
+See [CLI Usage](#cli-usage) for detailed documentation.
+
+---
+
+## Workflow
+
+![AMPidentifier Workflow](img/workflow.svg)
+
+### Pipeline Architecture
+
+```
+┌─────────────────┐
+│  Input FASTA    │
+│  Sequences      │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────────────────────────┐
+│  Feature Extraction (modlamp)      │
+│  - Physicochemical descriptors     │
+│  - Hydrophobicity, charge, pI      │
+│  - Secondary structure prediction  │
+└────────┬────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────┐
+│  Normalization (StandardScaler)    │
+│  - Feature scaling                 │
+│  - Consistent model input          │
+└────────┬────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────┐
+│  Model Selection                   │
+│  ┌─────────┬─────────┬──────────┐  │
+│  │   RF    │   SVM   │    GB    │  │
+│  └─────────┴─────────┴──────────┘  │
+│         │                           │
+│         ▼                           │
+│  Ensemble Voting (Optional)        │
+└────────┬────────────────────────────┘
+         │
+         ▼
+┌─────────────────────────────────────┐
+│  Output                            │
+│  - prediction_report.csv           │
+│  - physicochemical_features.csv    │
+└─────────────────────────────────────┘
+```
 
 ### Workflow Steps
 
-1. **Input FASTA File**
-   - Users provide amino acid sequences in standard FASTA format
-   - Multiple sequences can be processed in a single run
-
-2. **AMPidentifier CLI (`main.py`)**
-   - Command-line interface serving as the entry point
-   - Orchestrates the entire prediction pipeline
-   - Handles user arguments and configuration
-
-3. **Parallel Processing Branches**
-
-   **Branch A: Feature Extraction**
-   - Computes physicochemical descriptors using `modlamp` library
-   - Applies StandardScaler normalization (essential for model performance)
-   - Generates `physicochemical_features.csv` with detailed sequence properties
-   - These features serve as input for the prediction models
-
-   **Branch B: Model Selection**
-   - Users choose one of three prediction strategies:
-     - **Single Model**: Select one algorithm (RF, SVM, or GB)
-     - **Ensemble Mode**: Combines all three models through majority voting (recommended)
-     - **External Models**: Load custom `.pkl` models for comparison
-
-4. **Model Inference**
-   - Applies selected model(s) to normalized features
-   - Three internal models available:
-     - **RF**: Random Forest (best single-model performance)
-     - **SVM**: Support Vector Machine
-     - **GB**: Gradient Boosting
-   - Optional: External models can be included for benchmarking
-
-5. **Output Generation**
-   - `prediction_comparison_report.csv`: Contains classification results
-     - AMP vs non-AMP predictions
-     - Confidence scores per model
-     - Side-by-side model comparison
-     - Consensus prediction (in ensemble mode)
-
-### Key Characteristics
-
-- **Modular Design**: Each component operates independently and can be used separately
-- **Flexible Model Selection**: Supports single models, ensemble voting, and external model integration
-- **Normalized Features**: StandardScaler ensures consistent and optimal model performance
-- **Comprehensive Output**: Both feature tables and prediction reports are generated for downstream analysis
+1. **Input:** FASTA-formatted amino acid sequences
+2. **Feature Extraction:** Compute physicochemical descriptors using modlamp
+3. **Normalization:** Apply StandardScaler transformation
+4. **Model Inference:** Execute selected model(s) on normalized features
+5. **Ensemble Voting:** Combine predictions via majority vote (if enabled)
+6. **Output Generation:** Export predictions and features to CSV
 
 ---
 
-### Quick Links Map
+## Technology Stack
 
-| Step / Artifact                         | See Section                               |
-|---------------------------------------- |-------------------------------------------|
-| Input FASTA                             | [Arguments](#arguments)                    |
-| CLI usage                               | [How to Use (CLI)](#how-to-use-cli)        |
-| Physicochemical feature generation      | [Key Features](#key-features)              |
-| Model selection / flags                 | [Arguments](#arguments)                    |
-| Internal models overview                | [Pre-Trained Internal Models](#pre-trained-internal-models) |
-| Outputs (features.csv, predictions.csv) | [Outputs](#outputs)                        |
+### Core Technologies
 
+| Component | Technology | Version | Purpose |
+|-----------|-----------|---------|---------|
+| **Runtime** | Python | 3.8+ | Core language |
+| **ML Framework** | scikit-learn | 1.3.0 | Model training and inference |
+| **Feature Extraction** | modlamp | 4.3.0 | Physicochemical descriptors |
+| **Data Processing** | pandas | 2.1.0 | Data manipulation |
+| **Numerical Computing** | NumPy | 1.24.0 | Array operations |
 
+### Web Portal Stack
 
----
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Frontend** | HTML5/CSS3/JavaScript | User interface |
+| **Styling** | Custom CSS (Vanilla) | Liquid glass design system |
+| **Typography** | Google Fonts (Inter) | Professional typeface |
+| **Backend** | Flask 3.0.0 | API server (not deployed) |
+| **Hosting** | GitHub Pages | Static site hosting |
 
-## Key Features
+### Machine Learning Models
 
-- **Multiple Internal Models:** Three pre-trained ML models (Random Forest, Gradient Boosting, SVM).
-- **Ensemble Voting:** Majority vote across internal models to improve robustness.
-- **Model Selection:** Choose a specific internal model on demand.
-- **External Model Comparison:** Load external `.pkl` models for side-by-side comparison.
-- **Feature Generation:** Compute and export an extensive set of physicochemical descriptors.
+| Model | Algorithm | Accuracy | Use Case |
+|-------|-----------|----------|----------|
+| **RF** | Random Forest | 88.45% | Best single-model performance |
+| **SVM** | Support Vector Machine | 87.40% | High precision |
+| **GB** | Gradient Boosting | 85.85% | Good generalization |
+| **Ensemble** | Majority Voting | 87.47% | Recommended for production |
 
 ---
 
 ## Installation
 
-We recommend using a virtual environment.
+### Prerequisites
+
+- Python 3.8 or higher
+- pip package manager
+- Virtual environment (recommended)
+
+### Setup
+
+1. **Clone Repository:**
+   ```bash
+   git clone https://github.com/madsondeluna/AMPidentifier.git
+   cd AMPidentifier
+   ```
+
+2. **Create Virtual Environment:**
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # macOS/Linux
+   # venv\Scripts\activate  # Windows
+   ```
+
+3. **Install Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Verify Installation:**
+   ```bash
+   python3 main.py --help
+   ```
+
+---
+
+## Quick Start
+
+### CLI Quick Test
+
+Run a prediction using sample data:
 
 ```bash
-git clone https://github.com/madsondeluna/AMPIdentifier.git
-cd AMPIdentifier
-
-# Create the environment
-python3 -m venv venv
-
-# Activate (macOS/Linux)
-source venv/bin/activate
-
-# Activate (Windows)
-# venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
+python3 main.py \
+  --input data-for-tests/sequences_to_predict.fasta \
+  --output_dir ./test_results \
+  --ensemble
 ```
 
----
-
-## Quick Test
-
-Run a quick prediction using the sample data shipped with the repository:
-
-```bash
-python3 main.py --input data-for-tests/sample_sequences.fasta --output_dir ./test_results --ensemble
+**Expected Output:**
+```
+test_results/
+├── physicochemical_features.csv
+└── prediction_comparison_report.csv
 ```
 
-If no errors occur and `test_results` is created with output files, your installation is working.
+### Web Portal Quick Test
+
+1. **Local Development Server:**
+   ```bash
+   cd web_portal
+   python3 -m http.server 8080
+   ```
+
+2. **Access:** http://localhost:8080
+
+3. **Test Prediction:**
+   - Click "Carregar Exemplo"
+   - Select "Ensemble" model
+   - Click "Executar Predição"
+   - View demo results
 
 ---
 
-## How to Use (CLI)
+## Performance Metrics
 
-The entry point is `main.py`.
+### Individual Model Performance
 
----
+| Metric | Random Forest | SVM | Gradient Boosting |
+|--------|--------------|-----|-------------------|
+| **Accuracy** | **88.45%** | 87.40% | 85.85% |
+| **Precision** | **89.10%** | 88.80% | 86.65% |
+| **Recall** | **87.62%** | 85.58% | 84.75% |
+| **Specificity** | **89.28%** | 89.21% | 86.94% |
+| **F1-Score** | **88.36%** | 87.16% | 85.69% |
+| **MCC** | **0.7692** | 0.7484 | 0.7172 |
+| **AUC-ROC** | **0.9503** | 0.9356 | 0.9289 |
 
-<p align="center">
-  <img src="/img/logo-use2.png" alt="AMPidentifer in use on terminal"/>
-</p>
+### Ensemble Mode Performance
 
----
+**Confusion Matrix:**
 
-### Arguments
+|  | Predicted: Negative | Predicted: Positive | Total |
+|---|---------------------|---------------------|-------|
+| **Actual: Negative** | TN = 1179 (88.98%) | FP = 146 (11.02%) | 1325 |
+| **Actual: Positive** | FN = 186 (14.04%) | TP = 1139 (85.96%) | 1325 |
+| **Total** | 1365 | 1285 | **2650** |
 
-| Argument               | Description                                                                 | Required | Default |
-|------------------------|-----------------------------------------------------------------------------|:--------:|:-------:|
-| `-i, --input`          | Path to the input FASTA file                                                |   Yes    |   -     |
-| `-o, --output_dir`     | Path to the output directory                                                |   Yes    |   -     |
-| `-m, --model`          | Internal model to use: `rf`, `svm`, `gb`                                    |    No    |  `rf`   |
-| `--ensemble`           | Enable majority-vote ensemble across all internal models                    |    No    |  Flag   |
-| `-e, --external_models`| One or more paths to external `.pkl` models for comparison (comma-separated)|    No    |   -     |
-
-### Examples
-
-Single-model (Random Forest, default):
-```bash
-python3 main.py --input my_sequences.fasta --output_dir ./results_rf
-```
-
-Ensemble voting:
-```bash
-python3 main.py --input my_sequences.fasta --output_dir ./results_ensemble --ensemble
-```
-
-Compare SVM with an external model:
-```bash
-python3 main.py --input my_sequences.fasta --output_dir ./compare_svm --model svm --external_models /path/to/my_model.pkl
-```
-
----
-
-## Pre-Trained Internal Models
-
-Three models are distributed and evaluated on the same dataset for fair comparison.
-
-### Performance Summary
-
-Best values per metric are in **bold**.
-
-| Metric         | Random Forest (RF) | Support Vector Machine (SVM) | Gradient Boosting (GB) |
-|----------------|--------------------:|------------------------------:|-----------------------:|
-| Accuracy       | **0.8845**         | 0.8740                        | 0.8585                 |
-| Precision      | **0.8910**         | 0.8880                        | 0.8665                 |
-| Recall         | **0.8762**         | 0.8558                        | 0.8475                 |
-| Specificity    | **0.8928**         | 0.8921                        | 0.8694                 |
-| F1-Score       | **0.8836**         | 0.8716                        | 0.8569                 |
-| MCC            | **0.7692**         | 0.7484                        | 0.7172                 |
-| AUC-ROC        | **0.9503**         | 0.9356                        | 0.9289                 |
-
-**Best Practice (Recommended by the authors):** Use **Ensemble Mode** (`--ensemble`)
-- Combines all three models through majority voting
-- Leverages the strengths of each algorithm
-- Provides more robust and reliable predictions
-- Supported by literature as the best approach for AMP classification
-- All models have excellent metrics (>85% accuracy, >0.92 AUC-ROC)
-
-**For Single Model Usage:** Random Forest (RF)
-- Best overall performance across all metrics
-- Highest accuracy (88.45%) and AUC-ROC (0.9503)
-- Excellent balance between sensitivity and specificity
-
----
-
-## Ensemble Mode Performance
-
-|                                | **Predicted: 0** (Negative) | **Predicted: 1** (Positive) | **Actual Total** |
-| :----------------------------- | :-------------------------: | :-------------------------: | :--------------: |
-| **Actual: 0** (Negative Dataset) | **TN = 1179** (88.98%)     | **FP = 146** (11.02%)       |       1325       |
-| **Actual: 1** (Positive Dataset) | **FN = 186** (14.04%)      | **TP = 1139** (85.96%)      |       1325       |
-| **Predicted Total**             |            1365             |            1285             |    **2650**      |
-
-**Ensemble Performance Metrics:**
+**Metrics:**
 - **Accuracy:** 87.47%
 - **Sensitivity (Recall):** 85.96%
 - **Specificity:** 88.98%
 
-### Table Explanation
-
-This table is a confusion matrix, a fundamental tool for evaluating the performance of a classification model. It compares the actual values from your data with the predictions made by the model.
-
-- **Rows (Actual):** Represent the true class of each sample.  
-  - *Actual: 0*: Samples that are truly negative (from your "negative dataset").  
-  - *Actual: 1*: Samples that are truly positive (from your "positive dataset").  
-
-- **Columns (Predicted):** Represent the class that the model assigned to each sample.  
-  - *Predicted: 0*: Samples that the model classified as negative.  
-  - *Predicted: 1*: Samples that the model classified as positive.  
+**Recommendation:** Use Ensemble mode for production deployments.
 
 ---
 
-### The four central quadrants represent the classification results:
+## Web Portal Details
 
-- **TN (True Negative):**  
-  - Value: 1179  
-  - Meaning: The ensemble correctly predicted 1179 samples as negative, and they were indeed negative.  
-  - The rate of 88.98% (1179/1325) represents the model's **specificity**.  
+### Architecture
 
-- **FP (False Positive):**  
-  - Value: 146  
-  - Meaning: The ensemble incorrectly predicted 146 samples as positive when they were actually negative.  
-  - This is also known as a **Type I Error**.  
+**Current (Static Frontend):**
+```
+GitHub Pages → HTML/CSS/JS → Mock Data
+```
 
-- **FN (False Negative):**  
-  - Value: 186  
-  - Meaning: The ensemble incorrectly predicted 186 samples as negative when they were actually positive.  
-  - This is also known as a **Type II Error**.  
+**Target (Full Stack):**
+```
+GitHub Pages (Frontend) ←→ Render.com (Flask API) ←→ AMPidentifier Core
+```
 
-- **TP (True Positive):**  
-  - Value: 1139  
-  - Meaning: The ensemble correctly predicted 1139 samples as positive, and they were indeed positive.  
-  - The rate of 85.96% (1139/1325) represents the model's **sensitivity (or recall)**.  
+### Technology Details
 
-#### Understanding Type I and Type II Errors
+**Frontend:**
+- **HTML5:** Semantic markup, accessibility features
+- **CSS3:** 600+ lines, custom properties, glassmorphism effects
+- **JavaScript:** ES6+, async/await, fetch API
+- **Design:** Mobile-first, responsive (320px - 2560px)
 
-In statistical hypothesis testing and machine learning classification:
+**Backend (Not Deployed):**
+- **Framework:** Flask 3.0.0
+- **API Endpoints:**
+  - `POST /api/predict` - Execute prediction
+  - `POST /api/download/<type>` - Download results
+- **CORS:** Configured for GitHub Pages origin
+- **Processing:** Async job queue (planned)
 
-- **Type I Error (False Positive - FP):**  
-  - **Definition:** Rejecting a true null hypothesis; predicting positive when the actual class is negative.
-  - **In AMP context:** Classifying a non-AMP peptide as an AMP.
-  - **Consequence:** Wasted resources (time, money, lab work) investigating peptides that don't have antimicrobial activity.
-  - **Control:** Reducing Type I errors increases **specificity** but may increase Type II errors.
+### Features
 
-- **Type II Error (False Negative - FN):**  
-  - **Definition:** Failing to reject a false null hypothesis; predicting negative when the actual class is positive.
-  - **In AMP context:** Classifying a true AMP peptide as non-AMP.
-  - **Consequence:** Missing potentially valuable antimicrobial peptides that could be therapeutic candidates.
-  - **Control:** Reducing Type II errors increases **sensitivity** but may increase Type I errors.
+**Available:**
+- Interactive FASTA input with validation
+- Model selection dropdown (RF/SVM/GB/Ensemble)
+- Example data loading
+- Results display in tabular format
+- CSV export functionality
+- Responsive navigation
+- Error handling and user feedback
 
-**Trade-off in AMPidentifier:**  
-The ensemble model is calibrated to minimize False Positives (Type I errors) while maintaining good sensitivity. This is preferable for AMP screening because:
-- High confidence in positive predictions (low FP rate of 11.02%)
-- Efficient use of laboratory resources
-- Some true AMPs may be missed (FN rate of 14.04%), but can be recovered in subsequent screening rounds
+**Planned:**
+- File upload (drag-and-drop)
+- Batch processing
+- Prediction history (localStorage)
+- PDF export
+- User authentication
+- API rate limiting
+
+### Limitations
+
+1. **Static Hosting:** GitHub Pages cannot execute Python code
+2. **No Backend:** Requires external API for real predictions
+3. **Demo Mode:** Currently shows mock data only
+4. **No Persistence:** No database or session storage
+5. **CORS:** Cross-origin requests require proper configuration
+
+### Deployment
+
+**Frontend (Live):**
+```bash
+# Automatic deployment via GitHub Actions
+git push origin main
+# Live at: https://madsondeluna.github.io/AMPidentifier
+```
+
+**Backend (Manual - Not Configured):**
+
+Option 1: Render.com
+```yaml
+Build: pip install -r web_portal/requirements.txt
+Start: cd web_portal && gunicorn app:app
+```
+
+Option 2: Heroku
+```bash
+heroku create ampidentifier-api
+git push heroku main
+```
+
+See `web_portal/DEPLOY.md` for detailed instructions.
 
 ---
 
-## Outputs
+## CLI Usage
 
-- `physicochemical_features.csv`: Detailed table of computed descriptors.
-- `prediction_comparison_report.csv`: Final predictions, including a column for each model used.
+### Basic Usage
+
+```bash
+python3 main.py --input <fasta_file> --output_dir <output_directory> [options]
+```
+
+### Arguments
+
+| Argument | Type | Required | Default | Description |
+|----------|------|----------|---------|-------------|
+| `-i, --input` | str | Yes | - | Path to input FASTA file |
+| `-o, --output_dir` | str | Yes | - | Output directory path |
+| `-m, --model` | str | No | `rf` | Model choice: `rf`, `svm`, `gb` |
+| `--ensemble` | flag | No | False | Enable ensemble mode |
+| `-e, --external_models` | str | No | - | Comma-separated paths to external .pkl models |
+
+### Examples
+
+**Single Model (Random Forest):**
+```bash
+python3 main.py \
+  --input sequences.fasta \
+  --output_dir ./results_rf
+```
+
+**Ensemble Mode (Recommended):**
+```bash
+python3 main.py \
+  --input sequences.fasta \
+  --output_dir ./results_ensemble \
+  --ensemble
+```
+
+**With External Model:**
+```bash
+python3 main.py \
+  --input sequences.fasta \
+  --output_dir ./results_comparison \
+  --model svm \
+  --external_models /path/to/custom_model.pkl
+```
+
+### Output Files
+
+**1. `physicochemical_features.csv`**
+
+Contains computed descriptors for each sequence:
+- Sequence ID and amino acid sequence
+- Hydrophobicity indices
+- Charge and isoelectric point (pI)
+- Aromaticity and aliphatic index
+- Molecular weight and GRAVY score
+- Secondary structure predictions
+- 40+ additional features
+
+**2. `prediction_comparison_report.csv`**
+
+Contains prediction results:
+- Sequence ID
+- AMP classification (0 = Non-AMP, 1 = AMP)
+- Individual model predictions (if ensemble)
+- Confidence scores
+- Ensemble vote (if applicable)
 
 ---
 
-## Training Your Own Models
+## Model Training
 
-Use the scripts under `model_training/`, especially `train.py`, to build and evaluate models on your datasets.
+### Training Your Own Models
+
+The `model_training/` directory contains scripts for custom model training:
+
+```bash
+cd model_training
+python3 train.py
+```
+
+**Training Pipeline:**
+
+1. **Data Preparation:**
+   - Positive sequences: `data/positive_sequences.fasta`
+   - Negative sequences: `data/negative_sequences.fasta`
+
+2. **Feature Extraction:**
+   - Compute physicochemical descriptors
+   - Apply StandardScaler normalization
+
+3. **Model Training:**
+   - Train RF, SVM, and GB models
+   - 80/20 train-test split
+   - Cross-validation for hyperparameter tuning
+
+4. **Evaluation:**
+   - Generate performance metrics
+   - Create confusion matrices
+   - Export evaluation reports
+
+**Output:**
+```
+model_training/saved_model/
+├── amp_model_rf.pkl
+├── amp_model_svm.pkl
+├── amp_model_gb.pkl
+├── feature_scaler.pkl
+├── evaluation_report.txt
+└── evaluation_report.csv
+```
+
+### Model Evaluation
+
+```bash
+python3 model_training/evaluate.py
+```
+
+Generates comprehensive metrics:
+- Accuracy, Precision, Recall
+- Specificity, F1-Score, MCC
+- AUC-ROC curves
+- Confusion matrices
 
 ---
 
 ## Project Structure
 
-```text
+```
 AMPidentifier/
-├── .gitignore                  # Instruct Git to ignore files (e.g., virtual env)
-├── LICENSE                     # Software license (e.g., MIT)
-├── README.md                   # Main project documentation
-├── requirements.txt            # Python dependencies
-├── main.py                     # CLI entry point for end users
+├── README.md                      # This file
+├── LICENSE                        # Software license
+├── requirements.txt               # Python dependencies
+├── main.py                        # CLI entry point
 │
-├── amp_identifier/             # Main application package
-│   ├── __init__.py             # Makes this directory a Python package
-│   ├── core.py                 # Orchestrates the main prediction workflow
-│   ├── data_io.py              # Input readers (e.g., FASTA)
-│   ├── feature_extraction.py   # Physicochemical descriptor computation
-│   ├── prediction.py           # Load .pkl models and run inference
-│   └── reporting.py            # Generate .csv reports
+├── amp_identifier/                # Core library
+│   ├── __init__.py
+│   ├── core.py                    # Main prediction workflow
+│   ├── data_io.py                 # FASTA file handling
+│   ├── feature_extraction.py     # Physicochemical descriptors
+│   ├── prediction.py              # Model inference
+│   └── reporting.py               # CSV report generation
 │
-├── normalization-info/         # Documentation about StandardScaler implementation
-│   ├── README.md               # Index of normalization documentation
-│   ├── normalization_impact_report.md  # Technical report (English)
-│   ├── resumo_normalizacao.md          # Executive summary (Portuguese)
-│   ├── quick_start_normalized.md       # Quick start guide
-│   ├── changelog.md            # Complete changelog
-│   └── verify_normalization.py # Verification script
+├── model_training/                # Model training pipeline
+│   ├── train.py                   # Training script
+│   ├── evaluate.py                # Evaluation script
+│   ├── data/                      # Training datasets
+│   │   ├── positive_sequences.fasta
+│   │   └── negative_sequences.fasta
+│   └── saved_model/               # Trained models
+│       ├── amp_model_rf.pkl
+│       ├── amp_model_svm.pkl
+│       ├── amp_model_gb.pkl
+│       └── feature_scaler.pkl
 │
-├── data-for-tests/             # Example data for quick tests
-│   ├── sequences_to_predict.fasta      # Multi-FASTA with example sequences
-│   └── results_ensemble/               # Example output directory
-│       ├── physicochemical_features.csv
-│       └── prediction_comparison_report.csv
+├── web_portal/                    # Web interface
+│   ├── README.md                  # Web portal documentation
+│   ├── DEPLOY.md                  # Deployment guide
+│   ├── app.py                     # Flask backend
+│   ├── requirements.txt           # Web dependencies
+│   ├── index.html                 # Homepage
+│   ├── predict.html               # Prediction interface
+│   ├── about.html                 # About page
+│   └── static/
+│       ├── css/
+│       │   └── style.css          # Design system (600+ lines)
+│       └── js/
+│           └── main.js            # Client-side logic (300+ lines)
 │
-├── model_training/             # Isolated module for training and evaluation
-│   ├── __init__.py             # Package initializer
-│   ├── train.py                # Train ML models with StandardScaler normalization
-│   ├── evaluate.py             # Evaluate trained models and compute metrics
-│   │
-│   ├── data/                   # Training/testing data
-│   │   ├── positive_sequences.fasta  # Positive (AMP) sequences for training
-│   │   ├── negative_sequences.fasta  # Negative (non-AMP) sequences for training
-│   │   ├── test_features.csv         # (Generated) Normalized test-set features
-│   │   └── test_labels.csv           # (Generated) Test-set labels
-│   │
-│   └── saved_model/            # Trained artifacts and evaluation outputs
-│       ├── feature_scaler.pkl        # (Generated) StandardScaler (REQUIRED)
-│       ├── amp_model_rf.pkl          # (Generated) Random Forest model
-│       ├── amp_model_svm.pkl         # (Generated) SVM model
-│       ├── amp_model_gb.pkl          # (Generated) Gradient Boosting model
-│       ├── evaluation_report.txt     # (Generated) Detailed text report
-│       └── evaluation_report.csv     # (Generated) Comparative CSV report
+├── data-for-tests/                # Example data
+│   ├── sequences_to_predict.fasta
+│   └── results_ensemble/
 │
-├── benchmarking/               # Benchmarking datasets and results
-│   ├── base/                   # Base datasets for benchmarking
-│   └── results/                # Benchmark results and comparisons
+├── benchmarking/                  # Benchmark datasets
+│   └── base/
+│       ├── bacterial_pos.fasta
+│       ├── bacterial_neg.fasta
+│       ├── fungal_pos.fasta
+│       ├── fungal_neg.fasta
+│       ├── viral_pos.fasta
+│       └── viral_neg.fasta
 │
-├── img/                        # Images directory
-│   └── logo-use.png            # Terminal usage screenshot
+├── img/                           # Documentation images
+│   ├── workflow.svg               # Pipeline diagram
+│   └── logo-use2.png
 │
-└── tests/                      # Unit tests to ensure code quality
-    ├── __init__.py             # Package initializer
-    └── test_prediction.py      # Tests for prediction functions
+├── normalization-info/            # Normalization documentation
+│   ├── README.md
+│   ├── normalization_impact_report.md
+│   └── resumo_normalizacao.md
+│
+└── tests/                         # Unit tests
+    ├── __init__.py
+    └── test_prediction.py
 ```
 
-### Key Components
+### Code Statistics
 
-- **Modular Design**: Each component is independent and can be used separately or as part of the full pipeline.
-- **Pre-trained Models**: Three models (RF, SVM, GB) ready to use individually or in ensemble mode.
-- **External Model Support**: Users can load their own `.pkl` models for comparison and extended analysis.
-
----
-
-## Comparative Benchmarking 
-
-AMPidentifier was designed to provide a robust, open-source alternative to existing AMP prediction tools. To ensure transparency and reproducibility, we benchmark AMPidentifier against other widely-used AMP classifiers, including both web-based servers and command-line tools.
-
-This comparison uses a standardized test dataset from the independent benchmark study by **Zulfiqar et al. (2024)**: "Machine Learning-Assisted Prediction and Generation of Antimicrobial Peptides" ([Small Sci. 2024, 2400579](https://onlinelibrary.wiley.com/doi/10.1002/smsc.202400579)). All tools are evaluated on the same dataset to ensure fair and unbiased comparison across multiple performance metrics. 
-
-**Important:** AMPidentifier will be evaluated using its **ensemble mode** (default recommended configuration), which combines predictions from all three internal models (Random Forest, SVM, Gradient Boosting) through majority voting. This represents the tool's best practice configuration as recommended by the authors and supported by literature as the optimal approach for AMP classification.
-
-The goal is to position AMPidentifier within the current landscape of AMP prediction tools and highlight its strengths in ensemble learning and modular design.
-
-### Benchmark Dataset Description
-
-The benchmark dataset used for comparative evaluation is organized by antimicrobial activity type and contains balanced positive (AMP) and negative (non-AMP) sequences:
-
-| Activity Type    | Positive Sequences | Negative Sequences | Total Sequences |
-|------------------|-------------------:|-------------------:|----------------:|
-| Antibacterial    | 984                | 984                | 1,968           |
-| Antifungal       | 1,384              | 1,384              | 2,768           |
-| Antiviral        | 739                | 739                | 1,478           |
-| **Total**        | **3,107**          | **3,107**          | **6,214**       |
-
-All sequences are stored in `benchmarking/base/` directory as FASTA files (`bacterial_pos.fasta`, `bacterial_neg.fasta`, `fungal_pos.fasta`, `fungal_neg.fasta`, `viral_pos.fasta`, `viral_neg.fasta`).
-
-**Dataset Source:** Independent test set from Zulfiqar et al. (2024), [DOI: 10.1002/smsc.202400579](https://onlinelibrary.wiley.com/doi/10.1002/smsc.202400579)
-
-### Comparison with State-of-the-Art Tools
-
-| Tool                | Acc (%) | Antibacterial | Antifungal | Antiviral | Type       | Open Source | Modular | Models Available | Ensemble | External Models |
-|---------------------|--------:|:-------------:|:----------:|:---------:|------------|:-----------:|:-------:|:----------------:|:--------:|:---------------:|
-| **AMPidentifier**   | -       | -             | -          | -         | CLI/Local  | Yes         | Yes     | RF, SVM, GB      | Yes      | Yes             |
-| AMPScanner v2       | -       | -             | -          | -         | Web        | -           | No      | -                | -        | No              |
-| iAMP-2L             | -       | -             | -          | -         | Web        | -           | No      | -                | -        | No              |
-| CAMPR3              | -       | -             | -          | -         | Web        | -           | Yes     | SVM, RF, ANN, DA | -        | No              |
-| AMPlify             | -       | -             | -          | -         | CLI/Web    | -           | -       | -                | -        | -               |
-| AMPDiscover         | -       | -             | -          | -         | CLI        | -           | -       | -                | -        | -               |
-
-**Column Descriptions:**
-- **Acc (%):** Overall accuracy percentage on the benchmark dataset, calculated as (TP + TN) / (TP + TN + FP + FN) × 100, where TP = True Positives, TN = True Negatives, FP = False Positives, FN = False Negatives
-- **Antibacterial:** Accuracy on antibacterial peptide subset, calculated as correctly predicted antibacterial sequences / total antibacterial sequences × 100
-- **Antifungal:** Accuracy on antifungal peptide subset, calculated as correctly predicted antifungal sequences / total antifungal sequences × 100
-- **Antiviral:** Accuracy on antiviral peptide subset, calculated as correctly predicted antiviral sequences / total antiviral sequences × 100
-- **Type:** Deployment format (Web-based server, CLI tool, or Local application)
-- **Open Source:** Publicly available source code (Yes/No)
-- **Modular:** Can individual models be used separately? (Yes/No)
-- **Models Available:** Machine learning algorithms available in the tool (RF = Random Forest, SVM = Support Vector Machine, GB = Gradient Boosting, ANN = Artificial Neural Network, DA = Discriminant Analysis)
-- **Ensemble:** Supports ensemble/voting prediction across multiple models? (Yes/No)
-- **External Models:** Allows integration of user-provided custom models (.pkl)? (Yes/No)
-
-**Benchmarking Status:**
-
-Comparative benchmarking experiments against other AMP prediction tools are currently **in progress**. Performance metrics (accuracy values) will be updated as experiments are completed using the standardized independent test set described above. All tools will be evaluated under identical conditions to ensure fair and unbiased comparison.
-
-**Note:** Complete validation results for AMPidentifier's internal models (Random Forest, SVM, Gradient Boosting) are already available in the [Pre-Trained Internal Models](#pre-trained-internal-models) section, including detailed performance metrics (Accuracy, Precision, Recall, Specificity, F1-Score, MCC, AUC-ROC) and confusion matrix analysis in the [Benchmarking (Using the Ensemble Mode)](#benchmarking-using-the-ensemble-mode---real-data) section.
+- **Total Lines:** ~8,000+
+- **Python Code:** ~3,500 lines
+- **Web Code:** ~1,800 lines (HTML/CSS/JS)
+- **Documentation:** ~2,700 lines
+- **Languages:** Python (60%), HTML/CSS/JS (25%), Markdown (15%)
 
 ---
 
-## Contributors
+## Limitations and Next Steps
 
-### Lead Developer
+### Current Limitations
 
-- **Madson A. de Luna Aragão** - PhD Candidate in Bioinformatics, UFMG  
-  Belo Horizonte, Minas Gerais, Brazil  
-  **Responsibilities:** project lead, software architecture, ML pipelines, documentation.  
-  **Contacts:** madsondeluna@gmail.com 
+**Technical:**
+1. Web portal requires external API for real predictions
+2. GitHub Pages cannot execute server-side code
+3. No user authentication or session management
+4. Limited to single-sequence processing in web interface
+5. No caching mechanism for repeated predictions
 
-### Collaborators
+**Functional:**
+6. No batch file upload in web portal
+7. No prediction history persistence
+8. No email notifications
+9. No API rate limiting
+10. No asynchronous job processing
 
-- **Rafael L. da Silva** - Masters Student, UFPE - Collaborator  
-  **Contributions:** data preprocessing, pipeline testing, literature review.
+### Next Steps
 
-### Advisory Team
+**Phase 1: Backend Deployment (Priority: High)**
 
-- **Ana M. Benko‑Iseppon, PhD** - Principal Investigator, UFPE - Advisor  
-  **Contributions:** scientific supervision, study design, biological validation.
+- [ ] Deploy Flask API to Render.com or Heroku
+- [ ] Configure CORS for cross-origin requests
+- [ ] Update frontend API endpoint
+- [ ] Implement error handling and retry logic
+- [ ] Add request validation and sanitization
 
-- **João Pacífico, PhD** - Principal Investigator, UPE - Co‑Advisor  
-  **Contributions:** computational analysis review, dataset curation, evaluation protocol, reproducibility.
+**Estimated Time:** 2-4 hours  
+**Complexity:** Medium
 
-- **Carlos A. dos Santos-Silva, PhD** - Professor, CESMAC - Co‑Advisor  
-  **Contributions:** structural biology expertise, evaluation protocol, benchmarking strategy, reproducibility.
+**Phase 2: Enhanced Functionality (Priority: Medium)**
 
----
+- [ ] File upload with drag-and-drop
+- [ ] Batch processing support
+- [ ] Prediction history (localStorage)
+- [ ] PDF export functionality
+- [ ] Progress indicators for long predictions
+- [ ] Input validation and error messages
 
-### Quick Reference (tabular)
+**Estimated Time:** 8-12 hours  
+**Complexity:** Medium
 
-| Name                       | Role / Responsibilities                                   | Affiliation | Location         |
-|----------------------------|------------------------------------------------------------|-------------|------------------|
-| Madson A. de Luna-Aragão, MSc  | Lead developer; architecture; ML; docs                     | UFMG        | Belo Horizonte, BR |
-| Rafael L. da Silva, BSc        | Collaborator; preprocessing; pipeline testing; lit. review | UFPE        | Recife, BR       |
-| Ana M. Benko‑Iseppon, PhD | Advisor; study design; review, validation                  | UFPE        | Recife, BR       |
-| João Pacífico, PhD        | Co-Advisor; computational review; evaluation       | UPE         | Petrolina, BR       |
-| Carlos A. dos Santos-Silva, PhD      | Co‑Advisor; pipeline testing, review    | CESMAC        | Maceió, BR       |
+**Phase 3: Advanced Features (Priority: Low)**
 
+- [ ] User authentication (OAuth/JWT)
+- [ ] Database integration (PostgreSQL)
+- [ ] Persistent prediction history
+- [ ] API rate limiting (Redis)
+- [ ] Asynchronous job queue (Celery)
+- [ ] Email notifications
+- [ ] Admin dashboard
 
----
+**Estimated Time:** 20-30 hours  
+**Complexity:** High
 
-## Funding & Acknowledgments
+**Phase 4: Optimization (Priority: Ongoing)**
 
-- **Principal Holder:** This software is officially registered under the **UFPE** - Universidade Federal de Pernambuco (Federal University of Pernambuco, Brazil).
-- This research was supported by **FACEPE** - Fundação de Amparo à Pesquisa do Estado de Pernambuco (Brazil).
-- We acknowledge the **PPGGBM** - Programa de Pós-Graduação em Genética e Biologia Molecular (Graduate Program in Genetics and Molecular Biology) at UFPE for institutional support.
+- [ ] Performance profiling and optimization
+- [ ] Lighthouse audit (score > 90)
+- [ ] Accessibility audit (WCAG 2.1 AA)
+- [ ] SEO optimization
+- [ ] Analytics integration
+- [ ] Error tracking (Sentry)
+- [ ] API documentation (Swagger/OpenAPI)
 
----
-
-## Intellectual Property
-
-- This tool is **officially registered** with the **INPI** - Instituto Nacional da Propriedade Industrial (Brazilian National Institute of Industrial Property).
-- **Registration Number:** BR 51 2025 005859-4
-- **Registration Date:** November 18, 2025
-- **Title:** AMPidentifier: A modular python toolkit for predicting antimicrobial peptides using ensemble machine learning
-- **Registered Authors:** Madson A. de Luna Aragão, Rafael L. da Silva, João Pacífico, Carlos A. dos Santos-Silva, Ana M. Benko-Iseppon
-- All rights reserved. Usage and distribution are subject to the project license terms.
+**Estimated Time:** 4-6 hours  
+**Complexity:** Low
 
 ---
 
 ## Contributing
 
-We welcome contributions from the community! Whether you want to report bugs, suggest new features, improve documentation, or contribute code, your input is valuable.
+Contributions are welcome! Please follow these guidelines:
 
 ### Reporting Issues
 
-Found a bug or have a suggestion? Please open an issue on GitHub!
+**Bug Reports:**
+- Clear title and description
+- Steps to reproduce
+- Expected vs actual behavior
+- Environment details (OS, Python version)
+- Error messages and logs
 
-#### Reporting a Bug
+**Feature Requests:**
+- Use case description
+- Proposed solution
+- Alternative approaches
+- Additional context
 
-When reporting a bug, please include:
+### Development Workflow
 
-1. **Clear Title**: Brief description of the problem
-2. **Environment Details**:
-   - Operating System (macOS, Linux, Windows)
-   - Python version (`python3 --version`)
-   - AMPidentifier version/commit
-3. **Steps to Reproduce**:
-   - Exact commands you ran
-   - Input files (if possible, share a minimal example)
-4. **Expected vs Actual Behavior**:
-   - What you expected to happen
-   - What actually happened
-5. **Error Messages**:
-   - Full error traceback
-   - Log files (if applicable)
+1. Fork the repository
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Make changes with clear commits
+4. Add tests for new functionality
+5. Update documentation
+6. Push to branch (`git push origin feature/amazing-feature`)
+7. Open Pull Request
 
-**Example Bug Report:**
-```
-Title: "Ensemble mode fails with external models on macOS"
+### Code Style
 
-Environment:
-- macOS 14.2
-- Python 3.11.5
-- Commit: abc123
-
-Steps to reproduce:
-1. Run: python3 main.py --input test.fasta --output_dir ./out --ensemble --external_models custom.pkl
-2. Error occurs during model loading
-
-Expected: All models should load and run ensemble prediction
-Actual: KeyError when loading external model
-
-Error message:
-KeyError: 'feature_names'
-[full traceback here]
-```
-
-#### Suggesting Features or Improvements
-
-When suggesting a new feature:
-
-1. **Clear Title**: Concise feature description
-2. **Use Case**: Explain why this feature would be useful
-3. **Proposed Solution**: Describe how you envision it working
-4. **Alternatives**: Any alternative approaches you've considered
-5. **Additional Context**: Examples, references, or mockups
-
-**Example Feature Request:**
-```
-Title: "Add support for CSV input format"
-
-Use Case:
-Many users have peptide sequences in CSV files with additional metadata.
-Supporting CSV input would eliminate the need for format conversion.
-
-Proposed Solution:
-Add a --format flag:
-python3 main.py --input sequences.csv --format csv --output_dir ./results
-
-CSV should have columns: id, sequence, [optional metadata]
-
-Alternatives:
-- Provide a conversion script (less convenient)
-- Support Excel files directly (more complex)
-
-Additional Context:
-Similar tools like ToolX support CSV input via pandas.
-```
-
-### Feature Requests & Roadmap
-
-We're constantly working to improve AMPidentifier. Some areas we're exploring:
-
-- **Activity-specific models**: Separate models for antibacterial, antifungal, and antiviral peptides
-- **Deep learning integration**: Support for transformer-based models
-- **Web interface**: Browser-based GUI for easier access
-- **API endpoint**: RESTful API for programmatic access
-- **Additional descriptors**: Integration with more feature calculation libraries
-
-If you have ideas for other features, please open an issue with the tag `enhancement`!
-
-### Code of Conduct
-
-- Be respectful and constructive
-- Provide clear and detailed information
-- Focus on the problem, not the person
-- Help create a welcoming environment for all contributors
+- **Python:** PEP 8, type hints, docstrings
+- **HTML:** Semantic markup, accessibility
+- **CSS:** BEM-inspired naming, mobile-first
+- **JavaScript:** ES6+, JSDoc comments
+- **Commits:** Conventional commits format
 
 ---
 
-## How to Cite
+## Citation
 
-If this tool or its outputs support your research, please cite the repository:
+If you use AMPidentifier in your research, please cite:
 
-```text
-Luna-Aragão, M. A., da Silva, R. L., Pacífico, J., Santos-Silva, C. A. & Benko‑Iseppon, A. M. (2025). AMPidentifier: A Python toolkit for predicting antimicrobial peptides using ensemble machine learning and physicochemical descriptors. GitHub repository. https://github.com/madsondeluna/AMPIdentifier
+```bibtex
+@software{ampidentifier2025,
+  author = {Luna-Aragão, Madson A. and da Silva, Rafael L. and Pacífico, João and Santos-Silva, Carlos A. and Benko-Iseppon, Ana M.},
+  title = {AMPidentifier: A Python toolkit for predicting antimicrobial peptides using ensemble machine learning and physicochemical descriptors},
+  year = {2025},
+  url = {https://github.com/madsondeluna/AMPidentifier},
+  note = {Software registered at INPI Brazil, BR 51 2025 005859-4}
+}
 ```
+
+---
+
+## License
+
+This software is officially registered with **INPI** (Instituto Nacional da Propriedade Industrial - Brazil).
+
+**Registration Number:** BR 51 2025 005859-4  
+**Registration Date:** November 18, 2025  
+**Registered Authors:** Madson A. de Luna Aragão, Rafael L. da Silva, João Pacífico, Carlos A. dos Santos-Silva, Ana M. Benko-Iseppon
+
+**Copyright © 2025** - All rights reserved.
+
+**Institutional Holder:** UFPE (Universidade Federal de Pernambuco, Brazil)
+
+---
+
+## Acknowledgments
+
+**Funding:**
+- FACEPE (Fundação de Amparo à Pesquisa do Estado de Pernambuco, Brazil)
+
+**Institutional Support:**
+- PPGGBM (Programa de Pós-Graduação em Genética e Biologia Molecular, UFPE)
+- UFMG (Universidade Federal de Minas Gerais)
+
+**Contributors:**
+
+| Name | Role | Institution |
+|------|------|-------------|
+| Madson A. de Luna Aragão, MSc | Lead Developer | UFMG |
+| Rafael L. da Silva, BSc | Collaborator | UFPE |
+| Ana M. Benko-Iseppon, PhD | Advisor | UFPE |
+| João Pacífico, PhD | Co-Advisor | UPE |
+| Carlos A. dos Santos-Silva, PhD | Co-Advisor | CESMAC |
+
+---
+
+## Contact
+
+**Lead Developer:** Madson A. de Luna Aragão  
+**Email:** madsondeluna@gmail.com  
+**Institution:** UFMG - Belo Horizonte, MG, Brazil  
+**GitHub:** [@madsondeluna](https://github.com/madsondeluna)
+
+**Project Links:**
+- **Web Portal:** https://madsondeluna.github.io/AMPidentifier
+- **Repository:** https://github.com/madsondeluna/AMPidentifier
+- **Issues:** https://github.com/madsondeluna/AMPidentifier/issues
+- **Discussions:** https://github.com/madsondeluna/AMPidentifier/discussions
+
+---
+
+**Version:** 1.0.0  
+**Last Updated:** December 2025  
+**Status:** Production (CLI) | Beta (Web Portal)
